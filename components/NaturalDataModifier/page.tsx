@@ -21,7 +21,7 @@ interface Modification {
     value: string;
   };
 }
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Props<T> {
   type: "clients" | "workers" | "tasks";
   onModify: (modifications: Modification[]) => void;
