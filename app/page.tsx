@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { Client, Worker, Task, Rule } from "@/types/entities";
 import DataGridDisplay from "@/components/Datagrid/page";
 import RuleBuilder from "@/components/Rulebuilder/page";
-
+import { useEffect } from "react";
 const FileUpload = dynamic(() => import("@/components/fileUpload/page"), {
   ssr: false,
 });
@@ -17,6 +17,11 @@ export default function Home() {
   const [clientRules, setClientRules] = useState<Rule[]>([]);
   const [workerRules, setWorkerRules] = useState<Rule[]>([]);
   const [taskRules, setTaskRules] = useState<Rule[]>([]);
+  const [isClient, setIsClient] = useState(false);
+const dataTypes: ("clients" | "workers" | "tasks")[] = ["clients", "workers", "tasks"];
+    useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleData = (
     data: Client[] | Worker[] | Task[],
@@ -56,22 +61,22 @@ export default function Home() {
     <main className="min-h-screen px-6 md:px-12 py-8 bg-gradient-to-br from-gray-100 via-white to-gray-50 text-gray-800 dark:from-black dark:to-gray-900 dark:text-gray-100">
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-2">📊 Data Alchemist</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
+        <p className="text-lg text-gray-700 dark:text-black">
           Upload your CSV/XLSX files and apply dynamic rules to clean & visualize your data
         </p>
       </div>
 
-      {/* Upload Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        {["clients", "workers", "tasks"].map((type) => (
+        {dataTypes.map((type) => (
           <div key={type} className="p-5 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700">
             <h3 className="font-semibold text-lg capitalize mb-2">{type} upload</h3>
-            <FileUpload onDataLoaded={(data) => handleData(data, type as any)} />
-          </div>
+{isClient && (
+
+              <FileUpload onDataLoaded={(data) => handleData(data,type)} />
+            )}          </div>
         ))}
       </div>
 
-      {/* Counters */}
       <div className="flex flex-wrap justify-center gap-4 mb-8">
         <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
           👤 Clients Loaded: {clients.length}
@@ -84,7 +89,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Dynamic Rule Sections */}
       {clients.length > 0 && (
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">🔍 Client Rules & Data</h2>
