@@ -18,7 +18,6 @@ export default function Home() {
   const [taskRules, setTaskRules] = useState<Rule[]>([]);
   const dataTypes: ("clients" | "workers" | "tasks")[] = ["clients", "workers", "tasks"];
 
-
   const handleData = (
     data: Client[] | Worker[] | Task[],
     type: "clients" | "workers" | "tasks"
@@ -66,10 +65,8 @@ export default function Home() {
         {dataTypes.map((type) => (
           <div key={type} className="p-5 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700">
             <h3 className="font-semibold text-lg capitalize mb-2">{type} upload</h3>
-
-
-              <FileUpload onDataLoaded={(data) => handleData(data,type)} />
-                     </div>
+            <FileUpload onDataLoaded={(data) => handleData(data, type)} />
+          </div>
         ))}
       </div>
 
