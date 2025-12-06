@@ -1,4 +1,4 @@
-# 🧠 AI-Powered Data Cleaner App
+# AI-Powered Data Cleaner App
 
 This project is a **AI-powered Smart Data Validator and Modifier** built using **Next.js, React, Node.js, and Together AI API**. It enables users to **upload structured datasets** (Clients, Workers, Tasks), **apply validation rules**, and even **modify/filter data using natural language commands** — all within an intuitive UI.
 
